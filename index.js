@@ -7,24 +7,15 @@ import hotelsRoute from "./routes/hotels.js";
 import roomsRoute from "./routes/rooms.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import Hotel from "./models/Hotel.js";
-import hotels from './data.json' assert { type: "json" };;
 
 const app = express();
 dotenv.config();
+const PORT = process.env.PORT || 3000;
 
 const connect = async () => {
   try {
     await mongoose.connect(process.env.MONGO);
     console.log("Connected to mongoDB.");
-
-    // Save each item in the data array to the database
-    // for (const item of hotels) {
-    //   const model = new Hotel(item);
-    //   model.save()
-    //     .then(() => console.log(`Saved ${JSON.stringify(item)}`))
-    //     .catch(error => console.error(error));
-    // }
   } catch (error) {
     throw error;
   }
@@ -55,7 +46,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(8800, () => {
+app.listen(PORT, () => {
   connect();
   console.log("Connected");
 });
