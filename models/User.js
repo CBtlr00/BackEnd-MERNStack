@@ -13,15 +13,18 @@ const UserSchema = new mongoose.Schema(
     },
     country: {
       type: String,
+      required: false,
     },
     img: {
       type: String,
     },
     city: {
       type: String,
+      required: false,
     },
     phone: {
       type: String,
+      required: false,
     },
     password: {
       type: String,
