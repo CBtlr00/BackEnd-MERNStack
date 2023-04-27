@@ -51,6 +51,23 @@ export const getHotels = async (req, res, next) => {
     next(err);
   }
 };
+export const getHotelsByCity = async (req, res, next) => {
+  const { min, max, ...others } = req.query;
+  const cities = req.query.cities.split(",");
+  try {
+    const hotels = await Promise.all(
+      cities.map((city) => {
+        return Hotel.find({ city: city,
+          ...others,
+          cheapestPrice: { $gt: min | 1, $lt: max || 999 },
+        }).limit(req.query.limit);
+      })
+    );
+    res.status(200).json(hotels);
+  } catch (err) {
+    next(err);
+  }
+};
 export const countByCity = async (req, res, next) => {
   const cities = req.query.cities.split(",");
   try {

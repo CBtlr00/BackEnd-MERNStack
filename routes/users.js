@@ -1,12 +1,12 @@
 import express from "express";
-import { updateUser, deleteUser, getUser, getUsers } from "../controllers/users.js";
+import { updateUser, deleteUser, getUser, getUsers, updatePassword } from "../controllers/users.js";
 import { verifyAdmin, verifyToken, verifyUser } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
 //UPDATE
 router.put("/:id", verifyUser, updateUser);
-
+router.patch('/updatePassword',verifyUser, updatePassword)
 //DELETE
 router.delete("/:id", verifyUser, deleteUser);
 

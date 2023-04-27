@@ -10,16 +10,16 @@ router.get("/", (req,res)=> {
 
     //Updating a Room
     router.put("/:id", verifyAdmin, updateRoom);
-    router.put("/availability/:id", updateRoomAvailability);
+    router.put("/availability/:id", verifyAdmin, updateRoomAvailability);
 
     //Delete a Room
     router.delete("/:id/:hotelid", verifyAdmin, deleteRoom);
 
     //Get a Room
-    router.get("/:id", getRoom);
+    router.get("/:id", verifyAdmin,getRoom);
 
     //Get all Rooms
-    router.put("/", getRooms);
+    router.put("/", verifyAdmin, getRooms);
 })
 
 export default router
