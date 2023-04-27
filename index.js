@@ -8,8 +8,6 @@ import bookingsRoute from "./routes/booking.js";
 import roomsRoute from "./routes/rooms.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import Hotel from "./models/Hotel.js";
-import hotels from './data.json' assert { type: "json" };
 import stripeRoute from "./routes/stripe.js";
 
 const app = express();
