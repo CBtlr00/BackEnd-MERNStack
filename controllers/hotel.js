@@ -51,6 +51,23 @@ export const getHotels = async (req, res, next) => {
     next(err);
   }
 };
+export const getHotelsByCity = async (req, res, next) => {
+  const { min, max, ...others } = req.query;
+  const cities = req.query.cities.split(",");
+  try {
+    const hotels = await Promise.all(
+      cities.map((city) => {
+        return Hotel.find({ city: city,
+          ...others,
+          cheapestPrice: { $gt: min | 1, $lt: max || 999 },
+        });
+      })
+    );
+    res.status(200).json(hotels.flat());
+  } catch (err) {
+    next(err);
+  }
+};
 export const countByCity = async (req, res, next) => {
   const cities = req.query.cities.split(",");
   try {
@@ -60,6 +77,16 @@ export const countByCity = async (req, res, next) => {
       })
     );
     res.status(200).json(list);
+  } catch (err) {
+    next(err);
+  }
+};
+export const getHotelsByType = async (req, res, next) => {
+  const hotelType = req.params.type.toLowerCase();
+
+  try {
+    const hotels = await Hotel.find({ type: hotelType });
+    res.status(200).json(hotels);
   } catch (err) {
     next(err);
   }
@@ -93,6 +120,16 @@ export const getHotelRooms = async (req, res, next) => {
       })
     );
     res.status(200).json(list)
+  } catch (err) {
+    next(err);
+  }
+};
+export const getHotelsByPrice = async (req, res, next) => {
+  try {
+    const hotels = await Hotel.find()
+      .sort({ cheapestPrice: 1 })
+      .limit(req.query.limit);
+    res.status(200).json(hotels);
   } catch (err) {
     next(err);
   }
